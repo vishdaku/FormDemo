@@ -16,16 +16,20 @@
 
 
 
-
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import Prism from 'prismjs';
+
+
+import { FormService } from '../form-services/form.service';
 
 @Component({
-  templateUrl:'./builder.component.html'
+  templateUrl:'./builder.component.html',
+  providers:[FormService]
 })
 export class BuilderComponent implements AfterViewInit {
   @ViewChild('json') jsonElement?: ElementRef;
   @ViewChild('code') codeElement?: ElementRef;
+
+  constructor(private formservice:FormService){}
 
   public form: Object = {
     components: []
@@ -34,20 +38,13 @@ export class BuilderComponent implements AfterViewInit {
   onChange(event) {
     this.jsonElement.nativeElement.innerHTML = '';
     this.jsonElement.nativeElement.appendChild(document.createTextNode(JSON.stringify(event.form, null, 4)));
+    
+    this.formservice.saveOrUpdate(event.form);
   }
 
-  ngAfterViewInit() {
-    let formattedCode = Prism.highlight(`import { Component, ElementRef, ViewChild } from '@angular/core';
-@Component({
-  templateUrl:'./builder.component.html'
-})
-export class BuilderComponent {
-  @ViewChild('json') jsonElement?: ElementRef;
-  public form: Object = {components: []};
-  onChange(event) {
-    console.log(event.form);
-  }
-}`, Prism.languages.javascript, 'javascript');
-    this.codeElement.nativeElement.innerHTML = formattedCode;
-  }
+   ngAfterViewInit() {
+   }
+
+
+
 }
