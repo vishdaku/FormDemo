@@ -1,27 +1,23 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-builder',
-//   templateUrl: './builder.component.html',
-//   styleUrls: ['./builder.component.css']
-// })
-// export class BuilderComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-
-// }
-
 
 
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 
-
+import {Router} from '@angular/router'
 import { FormService } from '../form-services/form.service';
 
+
+
+
+interface MyForm{
+  name:string,
+  id:string,
+   group:string,
+   description:string,
+   components: string[]
+ }
+
 @Component({
+  selector: 'custom-form-builder',
   templateUrl:'./builder.component.html',
   providers:[FormService]
 })
@@ -29,9 +25,15 @@ export class BuilderComponent implements AfterViewInit {
   @ViewChild('json') jsonElement?: ElementRef;
   @ViewChild('code') codeElement?: ElementRef;
 
-  constructor(private formservice:FormService){}
 
-  public form: Object = {
+ 
+  constructor(private formservice:FormService,private router:Router){}
+
+  public form: MyForm= {
+    name:'',
+   id:'',
+    group:'',
+    description:'',
     components: []
   };
 
@@ -44,6 +46,12 @@ export class BuilderComponent implements AfterViewInit {
 
    ngAfterViewInit() {
    }
+
+   save() {
+     this.form.id = this.form.name;
+    this.formservice.saveOrUpdate(this.form);
+    this.router.navigate(['/form-list-viewer']);
+  }
 
 
 

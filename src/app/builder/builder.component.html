@@ -1,7 +1,35 @@
 <br>
 <br>
+
+
+ <label class="col-lg-3 control-label">Form Name</label>
+      <div class="col-lg-4">
+          <input type="text"
+                 class="form-control"
+                 name="name" [(ngModel)]="name">
+      </div>
+       
+
+      <br>
+      <label class="col-lg-3 control-label">Form Description</label>
+      <div class="col-lg-4">
+        <textarea class="col-lg-6"class ="form-control" name="description" [(ngModel)]="description"></textarea>
+      </div>
+        <br>
+      <label class="col-lg-3 control-label">Form Group</label>
+      <div class="col-lg-4">
+        <select class="col-lg-8" class="=form-control" name="option" [(ngModel)]="group">
+        
+          <option value="abc">Banking Form</option>
+          <option value="abc1">Ecommerce Form</option>
+          
+        </select>
+      </div>
+      <br>
+
+ 
 <form-builder [form]="form" (change)="onChange($event)"></form-builder>
-<hr/>
+<button [disabled]="loading" class="btn btn-primary" (click)="save()">Save</button>
 <h3 class="text-center text-muted">As JSON Schema</h3>
 <div class="well jsonviewer">
   <pre id="json" #json></pre>

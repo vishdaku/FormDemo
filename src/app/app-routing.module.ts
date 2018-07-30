@@ -1,13 +1,17 @@
-import {NgModule} from '@angular/core';
+import {NgModule, Component} from '@angular/core';
 import {Routes,RouterModule} from '@angular/router';
 import {BuilderComponent} from './builder/builder.component';
 import { FormTypeComponent } from './form-type/form-type.component';
+import { FormListViewerComponent } from './form-list-viewer/form-list-viewer.component';
+import { FormViewerComponent } from './form-viewer/form-viewer.component';
 
 
 const routes : Routes = [
+    
+    {path:'form-type',component:FormTypeComponent},
     { path:'builder', component: BuilderComponent},
-    {path:'form-type',component:FormTypeComponent}
-
+    {path:'form-list-viewer',component:FormListViewerComponent},
+ {path:'form-viewer',component:FormViewerComponent}
 ];
 
 @NgModule({
@@ -16,4 +20,4 @@ const routes : Routes = [
 })
 
 export class AppRoutingModule {}
-export const routingComponents = [BuilderComponent,FormTypeComponent]
+export const routingComponents = [BuilderComponent,FormTypeComponent,FormListViewerComponent,FormViewerComponent]
