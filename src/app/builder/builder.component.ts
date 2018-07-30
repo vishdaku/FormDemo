@@ -51,6 +51,7 @@ export class BuilderComponent implements AfterViewInit {
      this.form.id = this.form.name;
     this.formservice.saveOrUpdate(this.form);
     this.router.navigate(['/form-list-viewer']);
+    
   }
 
 

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient,HttpHeaders} from '@angular/common/http'
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { identifierModuleUrl } from '@angular/compiler';
-
-
-
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+const _headers = new HttpHeaders();
+const headers = _headers.append('Content-Type', 'application/json')
+                        .append('...', '...')
+                        .append('...', '...');
 interface MyForm{
   name:string,
   id:string,
@@ -17,33 +19,36 @@ interface MyForm{
 export class FormService {
 
   formList = [];
-  formMap = {};
+  
   formSubmissions = {};
-  url = "";
+  url = '';
+  
 
-  constructor(private httpClient: HttpClient/*,protected localStorage: LocalStorage*/){}
+  constructor(private http: HttpClient){}
    
   saveOrUpdate(form){
     this.formList.push(form);
-    this.formMap[form.id] = form;
-    //this.localStorage.setItem('formList',JSON.stringify(this.formList))
-    //console.log(JSON.stringify(this.formMap));
+
+   
 
     
+    
+    this.http.post("https://vassist-211503.appspot.com/api/form",form,{headers: headers})
+    .subscribe(data => console.log(data));
   }
+    
+  
 
-  get(formId){
-    return  this.formMap[formId];
-  }
+
+    
+
+  // get(formId){
+  //   return  this.formMap[formId];
+  // }
 
   list(){
-    // if(typeof this.formList==='undefined'){
-    //   this.localStorage.getItem<Array<MyForm>>('formList').subscribe((obj)=>{
-    //     console.log(JSON.stringify(obj));
-
-    //   });
- 
-    // }
+  this.http.get('https://vassist-211503.appspot.com/api/form/list')/*.map((response)=>response.json())*/.
+  subscribe((data)=>console.log(data))
     return this.formList;
   }
 
@@ -53,6 +58,6 @@ export class FormService {
     }
     this.formSubmissions[formId].push(formData);
   }
-
-
 }
+
+
