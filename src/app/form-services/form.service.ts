@@ -7,12 +7,17 @@ const _headers = new HttpHeaders();
 const headers = _headers.append('Content-Type', 'application/json')
                         .append('...', '...')
                         .append('...', '...');
-interface MyForm{
+export interface MyForm{
   name:string,
   id:string,
    group:string,
    description:string,
    components: string[]
+ }
+export interface FormListData
+ {
+   data:MyForm[]
+
  }
 
 @Injectable()
@@ -46,10 +51,8 @@ export class FormService {
   //   return  this.formMap[formId];
   // }
 
-  list(){
-  this.http.get('https://vassist-211503.appspot.com/api/form/list')/*.map((response)=>response.json())*/.
-  subscribe((data)=>console.log(data))
-    return this.formList;
+   list(){
+    return this.http.get<FormListData>('https://vassist-211503.appspot.com/api/form/list');
   }
 
   submitForm(formId, formData){

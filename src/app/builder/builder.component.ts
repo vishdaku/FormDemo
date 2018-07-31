@@ -41,7 +41,7 @@ export class BuilderComponent implements AfterViewInit {
     this.jsonElement.nativeElement.innerHTML = '';
     this.jsonElement.nativeElement.appendChild(document.createTextNode(JSON.stringify(event.form, null, 4)));
     
-    this.formservice.saveOrUpdate(event.form);
+    // this.formservice.saveOrUpdate(event.form);
   }
 
    ngAfterViewInit() {
