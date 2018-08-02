@@ -1,7 +1,6 @@
 <ul>
-  <li *ngFor="let form of formList">
-{{form.name}}
+    <li *ngFor="let form of formList">
+        <a [routerLink]="[ '/form-viewer',form._id]">{{form._id}}</a>
 
-  </li>
+    </li>
 </ul>
-

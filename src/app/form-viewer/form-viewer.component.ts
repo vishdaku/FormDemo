@@ -1,25 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { FormService } from '../form-services/form.service';
+import { FormService, MyForm } from '../form-services/form.service';
+import { ActivatedRoute } from '@angular/router'; 
 @Component({
   selector: 'app-form-viewer',
   templateUrl: './form-viewer.component.html',
   styleUrls: ['./form-viewer.component.css'],
   providers:[FormService]
 })
-export class FormViewerComponent implements OnInit {
 
-  constructor(private formservice:FormService) { }
+export class FormViewerComponent {
 
-  public form: Object = {
-    name:'',
-    group:'',
-    description:'',
-    components: []
-  };
+  form: MyForm = null;
 
-  ngOnInit() {
-    //form = this.formservice.get(formId);
-    
+  constructor(private formService: FormService, private route: ActivatedRoute) {
+   this.route.params.subscribe(res => this.loadForm(res.formId));
+  }
+
+  setForm(form){
+    this.form = form.data[0];
+    console.log(form);
+  }
+
+  loadForm(formId) {
+    this.formService.get(formId).subscribe(form => this.setForm(form));
   }
 
 }

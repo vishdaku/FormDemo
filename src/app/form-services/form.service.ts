@@ -9,16 +9,15 @@ const headers = _headers.append('Content-Type', 'application/json')
                         .append('...', '...');
 export interface MyForm{
   name:string,
-  id:string,
+  _id:string,
    group:string,
    description:string,
    components: string[]
  }
 export interface FormListData
- {
-   data:MyForm[]
-
- }
+{
+   data: MyForm[];
+}
 
 @Injectable()
 export class FormService {
@@ -26,33 +25,22 @@ export class FormService {
   formList = [];
   
   formSubmissions = {};
-  url = '';
+  url = 'https://vassist-211503.appspot.com/api/form/get/'
   
 
   constructor(private http: HttpClient){}
    
   saveOrUpdate(form){
-    this.formList.push(form);
-
-   
-
-    
-    
-    this.http.post("https://vassist-211503.appspot.com/api/form",form,{headers: headers})
-    .subscribe(data => console.log(data));
+   this.http.post("https://vassist-211503.appspot.com/api/form",form,{headers: headers})
+              //.subscribe(data => console.log(data));
   }
     
-  
+  get(formId){
+    return this.http.get(this.url + formId);
+   }
 
-
-    
-
-  // get(formId){
-  //   return  this.formMap[formId];
-  // }
-
-   list(){
-    return this.http.get<FormListData>('https://vassist-211503.appspot.com/api/form/list');
+  list(){
+    return this.http.get('https://vassist-211503.appspot.com/api/form/list');
   }
 
   submitForm(formId, formData){

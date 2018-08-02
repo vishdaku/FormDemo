@@ -11,16 +11,22 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class FormListViewerComponent implements OnInit {
   formList = [];
+
   constructor(private formservice:FormService,private router:Router) { }
+
   ngOnInit() {
     this.formservice.list().subscribe((data:FormListData)=> {
-      
-      for(var f in data.data)
+     
+     this.formList.splice(0,0);
+      for(let f of data.data)
       {
-        this.formList.push(f);
-        
+        this.formList.push(f);       
       }
-      console.log(JSON.stringify(this.formList));
+      //console.log(JSON.stringify(this.formList));
     });
   }
+
+
+
+
 }
