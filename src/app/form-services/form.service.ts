@@ -29,12 +29,11 @@ export class FormService {
   
 
   constructor(private http: HttpClient){}
-   
-  saveOrUpdate(form){
-   this.http.post("https://vassist-211503.appspot.com/api/form",form,{headers: headers})
-              //.subscribe(data => console.log(data));
+
+  saveOrUpdate(form){    
+    return this.http.post("https://vassist-211503.appspot.com/api/form", form, {headers: headers});
   }
-    
+
   get(formId){
     return this.http.get(this.url + formId);
    }

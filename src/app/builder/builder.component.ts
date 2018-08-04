@@ -1,25 +1,20 @@
-
-
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-
-import {Router} from '@angular/router'
+import {Router} from '@angular/router';
 import { FormService } from '../form-services/form.service';
 
-
-
-
 interface MyForm{
-  name:string,
-  id:string,
-   group:string,
-   description:string,
-   components: string[]
+  name: string,
+  id: string,
+   group: string,
+   description: string,
+   clientForm: {components:string[]},
+   agentForm: {components:string[]}
  }
 
 @Component({
   selector: 'custom-form-builder',
   templateUrl:'./builder.component.html',
-  providers:[FormService]
+  providers: [FormService]
 })
 export class BuilderComponent implements AfterViewInit {
   @ViewChild('json') jsonElement?: ElementRef;
@@ -27,32 +22,40 @@ export class BuilderComponent implements AfterViewInit {
 
 
  
-  constructor(private formservice:FormService,private router:Router){}
+  constructor(private formservice: FormService, private router: Router) {}
 
-  public form: MyForm= {
-    name:'',
-   id:'',
-    group:'',
-    description:'',
-    components: []
-  };
+    public form: MyForm = {
+      name: '',
+      id: '',
+      group: '',
+      description: '',
+      clientForm: {components:[]},
+      agentForm: {components: []}
+    };
 
-  onChange(event) {
-    this.jsonElement.nativeElement.innerHTML = '';
-    this.jsonElement.nativeElement.appendChild(document.createTextNode(JSON.stringify(event.form, null, 4)));
-    
-    // this.formservice.saveOrUpdate(event.form);
-  }
+    public previewForm = {components:[]};
 
-   ngAfterViewInit() {
-   }
+    initPreview(formName) {
+      if (formName === 'client') {
+        this.previewForm = this.form.clientForm;
+      }
+      else{
+        this.previewForm = this.form.agentForm;
+      }
+    }
 
-   save() {
-     this.form.id = this.form.name;
-    this.formservice.saveOrUpdate(this.form);
-    this.router.navigate(['/form-list-viewer']);
-    
-  }
+    resetPreview() {
+      this.previewForm =   {components: []};
+    }
+
+    ngAfterViewInit() {
+    }
+
+    save() {
+      // this.form.id = this.form.name;
+      this.formservice.saveOrUpdate(this.form).subscribe(data => console.log(data));
+      this.router.navigate(['/form-list-viewer']);
+    }
 
 
 

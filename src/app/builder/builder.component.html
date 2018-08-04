@@ -1,36 +1,51 @@
-<br>
-<br>
-
-
- <label class="col-lg-3 control-label">Form Name</label>
-      <div class="col-lg-4">
-          <input type="text"
-                 class="form-control"
-                 name="name" [(ngModel)]="name">
-      </div>
-       
-
-      <br>
-      <label class="col-lg-3 control-label">Form Description</label>
-      <div class="col-lg-4">
-        <textarea class="col-lg-6"class ="form-control" name="description" [(ngModel)]="description"></textarea>
-      </div>
+<aw-wizard>
+    <aw-wizard-step stepTitle="Form type">
+        <br><br>
+        <label class="col-lg-3 control-label">Form Name</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" name="name" [(ngModel)]="form.name">
+        </div>
         <br>
-      <label class="col-lg-3 control-label">Form Group</label>
-      <div class="col-lg-4">
-        <select class="col-lg-8" class="=form-control" name="option" [(ngModel)]="group">
-        
-          <option value="abc">Banking Form</option>
-          <option value="abc1">Ecommerce Form</option>
-          
-        </select>
-      </div>
-      <br>
+        <label class="col-lg-3 control-label">Form Description</label>
+        <div class="col-lg-4">
+            <textarea class="col-lg-6" class="form-control" name="description" [(ngModel)]="form.description"></textarea>
+        </div>
+        <br>
+        <label class="col-lg-3 control-label">Form Group</label>
+        <div class="col-lg-4">
+            <select class="col-lg-8" class="=form-control" name="option" [(ngModel)]="form.group">
+                
+                  <option value="abc">Banking Form</option>
+                  <option value="abc1">Ecommerce Form</option>
+                  
+            </select>
+        </div>
+        <br>
+        <button type="button" awNextStep>Next Step</button>
+        <button type="button" [awGoToStep]="{stepIndex: 2}">Go directly to third Step</button>
+    </aw-wizard-step>
 
- 
-<form-builder [form]="form" (change)="onChange($event)"></form-builder>
-<button [disabled]="loading" class="btn btn-primary" (click)="save()">Save</button>
-<h3 class="text-center text-muted">As JSON Schema</h3>
-<div class="well jsonviewer">
-  <pre id="json" #json></pre>
-</div>
+    <aw-wizard-step stepTitle="Client" awOptionalStep>
+        <form-builder [form]="form.clientForm"></form-builder>
+        <button type="button" awPreviousStep>Go to previous step</button>
+        <button type="button" awNextStep (click)="initPreview('client')">Go to next step</button>
+    </aw-wizard-step>
+
+    <aw-wizard-step stepTitle="Preview Client Form">
+        <formio [form]="previewForm"></formio>
+        <button type="button" awPreviousStep (click)="resetPreview()">Previous Step</button>
+        <button type="button" awNextStep>Go to next step</button>
+    </aw-wizard-step>
+
+    <aw-wizard-step stepTitle="Agent" awOptionalStep>
+        <form-builder [form]="form.agentForm"></form-builder>
+        <button type="button" awPreviousStep (click)="initPreview('client')">Go to previous step</button>
+        <button type="button" awNextStep (click)="initPreview('agent')">Go to next step</button>
+    </aw-wizard-step>
+
+    <aw-wizard-step stepTitle="Preview Agent Form">
+        <formio [form]="previewForm"></formio>
+        <button type="button" awPreviousStep (click)="resetPreview()">Previous Step</button>
+        <button type="button" (click)="save()">Finish</button>
+    </aw-wizard-step>
+</aw-wizard>

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-form-viewer',
   templateUrl: './form-viewer.component.html',
   styleUrls: ['./form-viewer.component.css'],
-  providers:[FormService]
+  providers: [FormService]
 })
 
 export class FormViewerComponent {
@@ -16,7 +16,7 @@ export class FormViewerComponent {
    this.route.params.subscribe(res => this.loadForm(res.formId));
   }
 
-  setForm(form){
+  setForm(form) {
     this.form = form.data[0];
     console.log(form);
   }

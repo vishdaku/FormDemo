@@ -1,18 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule,ReactiveFormsModule} from "@angular/forms";
-
-
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { FormioModule} from 'angular-formio';
-import{HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BuilderComponent } from './builder/builder.component';
-import {AppRoutingModule,routingComponents} from './app-routing.module';
+import {AppRoutingModule, routingComponents} from './app-routing.module';
 import { FormTypeComponent } from './form-type/form-type.component';
 import { FormViewerComponent } from './form-viewer/form-viewer.component';
 import { FormListViewerComponent } from './form-list-viewer/form-list-viewer.component';
-
-import { LocalStorageModule } from '@ngx-pwa/local-storage';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ArchwizardModule } from 'angular-archwizard';
 
 
 @NgModule({
@@ -23,9 +22,8 @@ import { LocalStorageModule } from '@ngx-pwa/local-storage';
     FormTypeComponent,
     FormViewerComponent,
     FormListViewerComponent,
-    
-    
-
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,8 +31,8 @@ import { LocalStorageModule } from '@ngx-pwa/local-storage';
     AppRoutingModule,
     FormioModule,
     HttpClientModule, 
-    FormsModule ,
-    LocalStorageModule  
+    FormsModule,
+    ArchwizardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
